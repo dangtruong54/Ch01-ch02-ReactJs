@@ -6,6 +6,7 @@ class Lesson extends Component {
     //       <li className="list-group-item">Item 1</li>
     // );
     return React.createElement('li', { classNaeme: 'list-group-item'}, 'Iteam 2');
+    // Introduce JSX
   }
 }
 

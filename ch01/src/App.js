@@ -4,14 +4,35 @@ import Course from '../src/components/Course'
 import './App.css';
 
 class App extends Component {
+
   render() {
+    const items = [
+      {
+        name : 'ReactJs',
+        time : '30h',
+        free : false,
+        description: 'This is course ReactJs'
+      },
+      {
+        name : 'Angular',
+        time : '55h',
+        free : true
+      },
+      {
+        name : 'NodeJS',
+        time : '35h',
+        free : true
+      }
+    ];
+
+    const elmCourses = items.map((item, index) =>
+    <Course key={index} name={item.name} time={item.time} free={item.free}> {item.description} </Course>
+    );
+
     return (
       <div className="App">
         <div className="row">
-          <Course />     
-          <Course /> 
-          <Course /> 
-          <Course />                    
+          {elmCourses}             
         </div>
       </div>
     );

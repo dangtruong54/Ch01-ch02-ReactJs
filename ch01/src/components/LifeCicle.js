@@ -32,6 +32,22 @@ class LifeCicle extends Component {
     }) 
   }
 
+  componentWillReceiveProps(){
+    console.log("componentWillReceiveProps");
+  }
+  shouldComponentUpdate(nextProps, nextState){
+    console.log("shouldComponentUpdate");
+    console.log(nextState);
+    return false;
+  }
+  componentWillUpdate(){
+    console.log("componentWillUpdate");
+  }
+
+  componentDidUpdate(){
+    console.log("componentDidUpdate");
+  }
+
   render() {
     console.log("render");
     return (

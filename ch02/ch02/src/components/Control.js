@@ -5,24 +5,17 @@ import Sort from './Sort'
 class Control extends Component {
 
     constructor(props) {
-        super(props);
-
-        this.state = {
-            showButton : false
-        }
+        super(props);       
         this.handleAddTask = this.handleAddTask.bind(this);
     }
 
     handleAddTask() {
-        this.props.onClickAdd();
-        this.setState({
-            showButton : !this.state.showButton
-        })
+        this.props.onClickAdd();        
     }
 
     render() {       
-        let showButton = this.state.showButton;
-        let button = null;
+        let showButton = this.props.isShowForm;
+        let button = <button type="button" onClick={this.handleAddTask} className="btn btn-success btn-block">Close Form</button>;;
         if(showButton) {
             button = <button type="button" onClick={this.handleAddTask} className="btn btn-success btn-block">Close Form</button>;
         }else {

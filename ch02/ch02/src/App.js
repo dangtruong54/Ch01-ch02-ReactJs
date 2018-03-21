@@ -44,7 +44,7 @@ class App extends Component {
                 {/* TITLE : END */}
 
                 {/* CONTROL (SEARCH + SORT + ADD) : START */}
-                <Control onClickAdd={this.handleToggleForm}/>
+                <Control onClickAdd={this.handleToggleForm} isShowForm={this.state.isShowForm}/>
                 {/* CONTROL (SEARCH + SORT + ADD) : END */}
 
                 {/* FORM : START */}

@@ -3,26 +3,50 @@ import Search from './Search'
 import Sort from './Sort'
 
 class Control extends Component {
-  render() {
-    return (            
-        <div className="row">
-            {/* SEARCH : START */}
-            <Search />
-            {/* SEARCH : END */}
 
-            {/* SORT : START */}
-            <Sort />
-            {/* SORT : END */}
+    constructor(props) {
+        super(props);
 
-            {/* ADD : START */}
-            <div className="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-                <button type="button" className="btn btn-info btn-block">Add Task</button>
+        this.state = {
+            showButton : false
+        }
+        this.handleAddTask = this.handleAddTask.bind(this);
+    }
+
+    handleAddTask() {
+        this.props.onClickAdd();
+        this.setState({
+            showButton : !this.state.showButton
+        })
+    }
+
+    render() {       
+        let showButton = this.state.showButton;
+        let button = null;
+        if(showButton) {
+            button = <button type="button" onClick={this.handleAddTask} className="btn btn-success btn-block">Close Form</button>;
+        }else {
+            button = <button type="button" onClick={this.handleAddTask} className="btn btn-info btn-block ">Add Task</button>;
+        }
+        return (            
+            <div className="row">
+                {/* SEARCH : START */}
+                <Search />
+                {/* SEARCH : END */}
+
+                {/* SORT : START */}
+                <Sort />
+                {/* SORT : END */}
+
+                {/* ADD : START */}
+                <div className="col-xs-5 col-sm-5 col-md-5 col-lg-5">                    
+                    {button}
+                </div>
+                {/* ADD : END */}
+
             </div>
-            {/* ADD : END */}
-
-        </div>
-    );
-  }
+        );
+    }
 }
 
 export default Control;

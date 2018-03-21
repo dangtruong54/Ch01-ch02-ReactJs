@@ -13,11 +13,29 @@ class App extends Component {
         super(props);
 
         this.state = {
-            items : items
+            items : items,
+            isShowForm : false
         }
+
+        this.handleToggleForm = this.handleToggleForm.bind(this);
     }
-    render() {      
+
+    handleToggleForm() {
+        this.setState({
+            isShowForm : !this.state.isShowForm
+        })
+    }
+
+
+    render() {   
+           
         let items = this.state.items;
+
+        let elemForm = this.state.isShowForm;
+        let showForm = null;
+        if(elemForm) {
+            showForm = <Form />;
+        }
 
         return (
             <div>
@@ -26,11 +44,11 @@ class App extends Component {
                 {/* TITLE : END */}
 
                 {/* CONTROL (SEARCH + SORT + ADD) : START */}
-                <Control />
+                <Control onClickAdd={this.handleToggleForm}/>
                 {/* CONTROL (SEARCH + SORT + ADD) : END */}
 
                 {/* FORM : START */}
-                <Form />
+                {showForm}
                 {/* FORM : END */}
 
                 {/* LIST : START */}

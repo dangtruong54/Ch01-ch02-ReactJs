@@ -3,30 +3,41 @@ import Title from './components/Title'
 import Control from './components/Control'
 import Form from './components/Form'
 import List from './components/List'
+import items from './mocks/tasks'
 
 import './App.css';
 
+
 class App extends Component {
-  render() {
-    return (
-        <div>
-            {/* TITLE : START */}   
-            <Title />
-            {/* TITLE : END */}
+    constructor(props) {
+        super(props);
 
-            {/* CONTROL (SEARCH + SORT + ADD) : START */}
-            <Control />
-            {/* CONTROL (SEARCH + SORT + ADD) : END */}
+        this.state = {
+            items : items
+        }
+    }
+    render() {      
+        let items = this.state.items;
 
-            {/* FORM : START */}
-            <Form />
-            {/* FORM : END */}
+        return (
+            <div>
+                {/* TITLE : START */}   
+                <Title />
+                {/* TITLE : END */}
 
-            {/* LIST : START */}
-            <List />
-             {/* LIST : END */}
-        </div>
-    );
+                {/* CONTROL (SEARCH + SORT + ADD) : START */}
+                <Control />
+                {/* CONTROL (SEARCH + SORT + ADD) : END */}
+
+                {/* FORM : START */}
+                <Form />
+                {/* FORM : END */}
+
+                {/* LIST : START */}
+                <List items={items}/>
+                {/* LIST : END */}
+            </div>
+        );
   }
 }
 

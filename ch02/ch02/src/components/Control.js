@@ -14,9 +14,11 @@ class Control extends Component {
     }
 
     render() {       
-        let showButton = this.props.isShowForm;
+        //let showButton = this.props.isShowForm;
+        let {orderBy, orderDir, isShowForm}  = this.props;
+
         let button = <button type="button" onClick={this.handleAddTask} className="btn btn-success btn-block">Close Form</button>;;
-        if(showButton) {
+        if(isShowForm) {
             button = <button type="button" onClick={this.handleAddTask} className="btn btn-success btn-block">Close Form</button>;
         }else {
             button = <button type="button" onClick={this.handleAddTask} className="btn btn-info btn-block ">Add Task</button>;
@@ -28,7 +30,10 @@ class Control extends Component {
                 {/* SEARCH : END */}
 
                 {/* SORT : START */}
-                <Sort />
+                <Sort 
+                    orderBy={orderBy}
+                    orderDir={orderDir}
+                />
                 {/* SORT : END */}
 
                 {/* ADD : START */}

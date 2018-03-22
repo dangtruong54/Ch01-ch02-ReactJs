@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import Title from './components/Title'
-import Control from './components/Control'
-import Form from './components/Form'
-import List from './components/List'
-import items from './mocks/tasks'
+import Title from './components/Title';
+import Control from './components/Control';
+import Form from './components/Form';
+import List from './components/List';
+//import _ from 'lodash';
+import {filter, includes} from 'lodash'
+import items from './mocks/tasks';
 
 import './App.css';
 
@@ -14,11 +16,19 @@ class App extends Component {
 
         this.state = {
             items : items,
-            isShowForm : false
+            isShowForm : false,
+            strSearch : ''
         }
 
         this.handleToggleForm = this.handleToggleForm.bind(this);
         this.hiddenFormCancel = this.hiddenFormCancel.bind(this);
+        this.handleSearch     = this.handleSearch.bind(this);  
+    }
+
+    handleSearch(value){
+        this.setState({
+            strSearch : value
+        })
     }
 
     handleToggleForm() {
@@ -34,12 +44,16 @@ class App extends Component {
     }
 
     render() {   
-           
-        let items = this.state.items;
 
-        let elemForm = this.state.isShowForm;   
-  
-        let showForm = null;
+        let itemsOrigin = [...this.state.items];
+        let items       = [];
+        let elemForm    = this.state.isShowForm; 
+        let showForm    = null;
+        const search    = this.state.strSearch;
+
+        items = filter(itemsOrigin, (item)=>{
+            return includes(item.name, search);
+        });
 
         if(elemForm) {
             showForm = <Form onclickCancel={this.hiddenFormCancel}/>;
@@ -52,7 +66,11 @@ class App extends Component {
                 {/* TITLE : END */}
 
                 {/* CONTROL (SEARCH + SORT + ADD) : START */}
-                <Control onClickAdd={this.handleToggleForm} isShowForm={this.state.isShowForm}/>
+                <Control 
+                    onClickSearchGo={this.handleSearch}
+                    onClickAdd={this.handleToggleForm} 
+                    isShowForm={this.state.isShowForm}
+                />
                 {/* CONTROL (SEARCH + SORT + ADD) : END */}
 
                 {/* FORM : START */}

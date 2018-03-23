@@ -4,7 +4,7 @@ import Control from './components/Control';
 import Form from './components/Form';
 import List from './components/List';
 //import _ from 'lodash';
-import {filter, includes, orderBy as orderByFunction} from 'lodash'
+import {filter, includes, orderBy as orderByFunction, remove} from 'lodash'
 import items from './mocks/tasks';
 
 import './App.css';
@@ -16,6 +16,7 @@ class App extends Component {
 
         this.state = {
             items           : items,
+            itemID          : '',
             isShowForm      : false,
             strSearch       : '',
             orderBy         : 'name',
@@ -26,6 +27,17 @@ class App extends Component {
         this.hiddenFormCancel = this.hiddenFormCancel.bind(this);
         this.handleSearch     = this.handleSearch.bind(this);  
         this.handleSort       = this.handleSort.bind(this);  
+        this.handleDelete     = this.handleDelete.bind(this);
+    }
+
+    handleDelete(id){
+       let items = this.state.items;
+       remove(items, (item) => {
+            return   item.id === id;
+       })
+       this.setState({
+           items : items
+       })
     }
 
     handleSort(orderBy, orderDir){
@@ -73,8 +85,6 @@ class App extends Component {
             showForm = <Form onclickCancel={this.hiddenFormCancel}/>;
         }
 
-        console.log(orderBy + orderDir);
-
         return (         
             <div>
                 {/* TITLE : START */}   
@@ -84,7 +94,7 @@ class App extends Component {
                 {/* CONTROL (SEARCH + SORT + ADD) : START */}
                 <Control 
                     orderBy={orderBy}
-                    orderDir={orderDir}
+                    orderDir={orderDir}                    
                     onclickSort={this.handleSort}
                     onClickSearchGo={this.handleSearch}
                     onClickAdd={this.handleToggleForm} 
@@ -97,7 +107,10 @@ class App extends Component {
                 {/* FORM : END */}
 
                 {/* LIST : START */}
-                <List items={items}/>
+                <List 
+                    items={items}
+                    onclickDelete={this.handleDelete}
+                />
                 {/* LIST : END */}
             </div>
         );

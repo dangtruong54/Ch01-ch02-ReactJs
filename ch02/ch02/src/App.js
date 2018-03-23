@@ -51,7 +51,7 @@ class App extends Component {
         let items       = [];  
         let showForm    = null;
         let {orderBy, orderDir, isShowForm, strSearch}   = this.state;
-
+        
         const search    = this.state.strSearch;
 
         items = filter(itemsOrigin, (item)=>{
@@ -61,7 +61,7 @@ class App extends Component {
         if(this.state.isShowForm) {
             showForm = <Form onclickCancel={this.hiddenFormCancel}/>;
         }
-
+        console.log(isShowForm + strSearch);
         return (
             <div>
                 {/* TITLE : START */}   

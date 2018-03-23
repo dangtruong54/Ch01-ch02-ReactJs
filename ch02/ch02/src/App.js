@@ -4,7 +4,7 @@ import Control from './components/Control';
 import Form from './components/Form';
 import List from './components/List';
 //import _ from 'lodash';
-import {filter, includes} from 'lodash'
+import {filter, includes, orderBy as orderByFunction} from 'lodash'
 import items from './mocks/tasks';
 
 import './App.css';
@@ -18,13 +18,21 @@ class App extends Component {
             items           : items,
             isShowForm      : false,
             strSearch       : '',
-            orderBy         : 'NAME',
-            orderDir        : 'ASC' 
+            orderBy         : 'name',
+            orderDir        : 'desc' 
         }
 
         this.handleToggleForm = this.handleToggleForm.bind(this);
         this.hiddenFormCancel = this.hiddenFormCancel.bind(this);
         this.handleSearch     = this.handleSearch.bind(this);  
+        this.handleSort       = this.handleSort.bind(this);  
+    }
+
+    handleSort(orderBy, orderDir){
+        this.setState({
+            orderBy : orderBy,
+            orderDir : orderDir
+        });        
     }
 
     handleSearch(value){
@@ -46,11 +54,12 @@ class App extends Component {
     }
 
     render() {   
-
+    
         let itemsOrigin = [...this.state.items];
-        let items       = [];  
+        let items       = []; 
+
         let showForm    = null;
-        let {orderBy, orderDir, isShowForm, strSearch}   = this.state;
+        let {orderBy, orderDir}   = this.state;
 
         const search    = this.state.strSearch;
 
@@ -58,11 +67,15 @@ class App extends Component {
             return includes(item.name.toLowerCase(), search.toLowerCase());
         });
 
+        items = orderByFunction(items, [orderBy], [orderDir]);
+
         if(this.state.isShowForm) {
             showForm = <Form onclickCancel={this.hiddenFormCancel}/>;
         }
 
-        return (
+        console.log(orderBy + orderDir);
+
+        return (         
             <div>
                 {/* TITLE : START */}   
                 <Title />
@@ -72,6 +85,7 @@ class App extends Component {
                 <Control 
                     orderBy={orderBy}
                     orderDir={orderDir}
+                    onclickSort={this.handleSort}
                     onClickSearchGo={this.handleSearch}
                     onClickAdd={this.handleToggleForm} 
                     isShowForm={this.state.isShowForm}

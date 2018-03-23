@@ -14,8 +14,8 @@ class Control extends Component {
     }
 
     render() {       
-        //let showButton = this.props.isShowForm;
-        let {orderBy, orderDir, isShowForm}  = this.props;
+
+        let {orderBy, orderDir, isShowForm}  = this.props;        
 
         let button = <button type="button" onClick={this.handleAddTask} className="btn btn-success btn-block">Close Form</button>;;
         if(isShowForm) {
@@ -23,16 +23,18 @@ class Control extends Component {
         }else {
             button = <button type="button" onClick={this.handleAddTask} className="btn btn-info btn-block ">Add Task</button>;
         }
+    
         return (            
             <div className="row">
                 {/* SEARCH : START */}
-                <Search onClickGo={this.props.onClickSearchGo}/>
+                <Search onClickGo={this.props.onClickSearchGo} />
                 {/* SEARCH : END */}
 
                 {/* SORT : START */}
-                <Sort 
+                <Sort
                     orderBy={orderBy}
                     orderDir={orderDir}
+                    onClickSort={this.props.onclickSort} 
                 />
                 {/* SORT : END */}
 

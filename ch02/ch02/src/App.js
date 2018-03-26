@@ -4,7 +4,7 @@ import Control from './components/Control';
 import Form from './components/Form';
 import List from './components/List';
 //import _ from 'lodash';
-import {filter, includes, orderBy as orderByFunction, remove} from 'lodash'
+import {filter, includes, orderBy as orderByFunction, remove, reject} from 'lodash'
 import items from './mocks/tasks';
 
 import './App.css';
@@ -21,7 +21,8 @@ class App extends Component {
             isShowForm      : false,
             strSearch       : '',
             orderBy         : 'name',
-            orderDir        : 'desc' 
+            orderDir        : 'desc',
+            item            : "" 
         }
 
         this.handleToggleForm = this.handleToggleForm.bind(this);
@@ -30,11 +31,20 @@ class App extends Component {
         this.handleSort       = this.handleSort.bind(this);  
         this.handleDelete     = this.handleDelete.bind(this);
         this.onClickAddTask   = this.onClickAddTask.bind(this);
+        this.handleEdit       = this.handleEdit.bind(this);
     }
 
     onClickAddTask(item) {
+
+        let {items} = this.state;
+        let id = null;
+        if(item.id !== "") {
+            items = reject(items, {id : item.id})
+        }else {
+            id = uuidv4();
+        }        
         items.push({
-            id      : uuidv4(),
+            id      : id,
             name    : item.name,
             level   : +item.level // 0 Small - 1 Medium - 2 - High
         })
@@ -42,6 +52,13 @@ class App extends Component {
             items : items,
             isShowForm : false
         })
+    }
+
+    handleEdit(item) {
+        this.setState({
+            isShowForm : true,
+            item       : item
+        })        
     }
 
     handleDelete(id){
@@ -96,7 +113,7 @@ class App extends Component {
         items = orderByFunction(items, [orderBy], [orderDir]);
 
         if(this.state.isShowForm) {
-            showForm = <Form onclickCancel={this.hiddenFormCancel} onClickAddTask={this.onClickAddTask}/>;
+            showForm = <Form onclickCancel={this.hiddenFormCancel} onClickEdit={this.state.item} onClickAddTask={this.onClickAddTask}/>;
         }
 
         return (         
@@ -123,7 +140,8 @@ class App extends Component {
                 {/* LIST : START */}
                 <List 
                     items={items}
-                    onclickDelete={this.handleDelete}                   
+                    onclickDelete={this.handleDelete}      
+                    onClickEdit={this.handleEdit}              
                 />
                 {/* LIST : END */}
             </div>

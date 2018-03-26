@@ -7,12 +7,13 @@ class Form extends Component {
 
         this.state = {
             hiddenForm : true,
+            id          : "",
             nameTask: '',
             levelTask: ''
         }
         this.clearForm = this.clearForm.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);               
     }
 
     clearForm() {
@@ -21,6 +22,18 @@ class Form extends Component {
         // this.refs.task_level.value = 1;
         // Cach 2: của anh Lân là đóng form add task lại
         this.props.onclickCancel();
+    }
+
+    componentWillMount() {
+        let itemEdit = this.props.onClickEdit;
+
+        if(itemEdit.id !== null) {
+            this.setState({
+                id      :itemEdit.id,
+                nameTask : itemEdit.name,
+                levelTask : itemEdit.level
+            })
+        }
     }
 
     handleChange(event) {
@@ -35,25 +48,28 @@ class Form extends Component {
 
     handleSubmit() {
         let item = {
+            id   : this.state.id,
             name : this.state.nameTask,
             level: this.state.levelTask
         };
         this.props.onClickAddTask(item);
     }
 
-    render() {
+    render() {        
+     
         return (            
             <div className="row">
                 <div className="col-md-offset-7 col-md-5">
                     <form action="#" method="POST" className="form-inline">
                         <div className="form-group">
                             <label className="sr-only" htmlFor="true">label</label>
+                            
                             <input type="text" name="nameTask" value={this.state.nameTask} className="form-control" placeholder="Task Name" onChange={this.handleChange}/>
                         </div>
                         <div className="form-group">
                             <label className="sr-only" htmlFor="true">label</label>
                             <select name="levelTask" value={this.state.levelTask} id="inputDs" className="form-control" required="required"  onChange={this.handleChange}>
-                                <option value={1}>Small</option>
+                                <option value={0}>Small</option>
                                 <option value={1}>Medium</option>
                                 <option value={2}>High</option>
                             </select>

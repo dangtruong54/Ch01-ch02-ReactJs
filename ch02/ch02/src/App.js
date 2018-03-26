@@ -8,6 +8,7 @@ import {filter, includes, orderBy as orderByFunction, remove} from 'lodash'
 import items from './mocks/tasks';
 
 import './App.css';
+const uuidv4 = require('uuid/v4');
 
 
 class App extends Component {
@@ -28,6 +29,19 @@ class App extends Component {
         this.handleSearch     = this.handleSearch.bind(this);  
         this.handleSort       = this.handleSort.bind(this);  
         this.handleDelete     = this.handleDelete.bind(this);
+        this.onClickAddTask   = this.onClickAddTask.bind(this);
+    }
+
+    onClickAddTask(item) {
+        items.push({
+            id      : uuidv4(),
+            name    : item.name,
+            level   : +item.level // 0 Small - 1 Medium - 2 - High
+        })
+        this.setState({
+            items : items,
+            isShowForm : false
+        })
     }
 
     handleDelete(id){
@@ -82,7 +96,7 @@ class App extends Component {
         items = orderByFunction(items, [orderBy], [orderDir]);
 
         if(this.state.isShowForm) {
-            showForm = <Form onclickCancel={this.hiddenFormCancel}/>;
+            showForm = <Form onclickCancel={this.hiddenFormCancel} onClickAddTask={this.onClickAddTask}/>;
         }
 
         return (         
@@ -109,7 +123,7 @@ class App extends Component {
                 {/* LIST : START */}
                 <List 
                     items={items}
-                    onclickDelete={this.handleDelete}
+                    onclickDelete={this.handleDelete}                   
                 />
                 {/* LIST : END */}
             </div>

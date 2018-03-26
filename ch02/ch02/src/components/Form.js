@@ -6,9 +6,13 @@ class Form extends Component {
         super(props);
 
         this.state = {
-            hiddenForm : true
+            hiddenForm : true,
+            nameTask: '',
+            levelTask: ''
         }
         this.clearForm = this.clearForm.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     clearForm() {
@@ -19,6 +23,24 @@ class Form extends Component {
         this.props.onclickCancel();
     }
 
+    handleChange(event) {
+        const target = event.target;
+        const value = target.value;
+        const name = target.name;
+
+        this.setState({
+            [name]: value
+        });
+    }
+
+    handleSubmit() {
+        let item = {
+            name : this.state.nameTask,
+            level: this.state.levelTask
+        };
+        this.props.onClickAddTask(item);
+    }
+
     render() {
         return (            
             <div className="row">
@@ -26,17 +48,17 @@ class Form extends Component {
                     <form action="#" method="POST" className="form-inline">
                         <div className="form-group">
                             <label className="sr-only" htmlFor="true">label</label>
-                            <input type="text" className="form-control" placeholder="Task Name" ref="task_name" />
+                            <input type="text" name="nameTask" value={this.state.nameTask} className="form-control" placeholder="Task Name" onChange={this.handleChange}/>
                         </div>
                         <div className="form-group">
                             <label className="sr-only" htmlFor="true">label</label>
-                            <select name="ds" id="inputDs" className="form-control" required="required" ref="task_level">
-                                Small
+                            <select name="levelTask" value={this.state.levelTask} id="inputDs" className="form-control" required="required"  onChange={this.handleChange}>
+                                <option value={1}>Small</option>
                                 <option value={1}>Medium</option>
                                 <option value={2}>High</option>
                             </select>
                         </div>
-                        <button type="button" className="btn btn-primary">Submit</button>
+                        <button type="button" className="btn btn-primary" onClick={this.handleSubmit}>Submit</button>
                         <button onClick={this.clearForm} type="button" className="btn btn-default">Cancel</button>
                     </form>
                 </div>

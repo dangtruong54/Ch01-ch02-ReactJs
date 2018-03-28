@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class Item extends Component {
     
     showLevel(level) {
-        let elemLevel = null;
+        let elemLevel = "";
         if(level === 0){
             elemLevel = <span className="label label-default">Small</span>;
         }else if(level === 1){

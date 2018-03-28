@@ -4,11 +4,13 @@ import Control from './components/Control';
 import Form from './components/Form';
 import List from './components/List';
 //import _ from 'lodash';
-import {filter, includes} from 'lodash'
+import {filter, includes} from 'lodash';
+
+
 import items from './mocks/tasks';
 
 import './App.css';
-
+const uuidv4 = require('uuid/v4');
 
 class App extends Component {
     constructor(props) {
@@ -16,21 +18,39 @@ class App extends Component {
 
         this.state = {
             items           : items,
+            
             isShowForm      : false,
             strSearch       : '',
             orderBy         : 'NAME',
-            orderDir        : 'ASC' 
+            orderDir        : 'ASC',
+            itemAddName     : '',
+            itemAddLevel    : ''
         }
 
         this.handleToggleForm = this.handleToggleForm.bind(this);
         this.hiddenFormCancel = this.hiddenFormCancel.bind(this);
         this.handleSearch     = this.handleSearch.bind(this);  
+        this.handleAddTask      = this.handleAddTask.bind(this);
     }
 
     handleSearch(value){
         this.setState({
             strSearch : value
         })
+    }
+
+    handleAddTask(item){
+
+        let {items} = this.state;
+        items.push({
+            id      : uuidv4(),
+            name    : item.name,
+            level   : +item.level // 0 Small - 1 Medium - 2 - High
+        });
+        this.setState({
+            items : items
+        })
+        this.state.isShowForm = false;
     }
 
     handleToggleForm() {
@@ -50,8 +70,8 @@ class App extends Component {
         let itemsOrigin = [...this.state.items];
         let items       = [];  
         let showForm    = null;
-        let {orderBy, orderDir, isShowForm, strSearch}   = this.state;
-        
+        let {orderBy, orderDir}   = this.state;
+    
         const search    = this.state.strSearch;
 
         items = filter(itemsOrigin, (item)=>{
@@ -59,9 +79,9 @@ class App extends Component {
         });
 
         if(this.state.isShowForm) {
-            showForm = <Form onclickCancel={this.hiddenFormCancel}/>;
+            showForm = <Form onclickCancel={this.hiddenFormCancel} onClickSubmit={this.handleAddTask}/>;
         }
-        console.log(isShowForm + strSearch);
+   
         return (
             <div>
                 {/* TITLE : START */}   

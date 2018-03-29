@@ -16,13 +16,13 @@ class App extends Component {
         super(props);
 
         this.state = {
-            items           : items,
+            items           : [],
             itemID          : '',
             isShowForm      : false,
             strSearch       : '',
             orderBy         : 'name',
             orderDir        : 'desc',
-            item            : "" 
+            item            : null 
         }
 
         this.handleToggleForm = this.handleToggleForm.bind(this);
@@ -32,6 +32,13 @@ class App extends Component {
         this.handleDelete     = this.handleDelete.bind(this);
         this.onClickAddTask   = this.onClickAddTask.bind(this);
         this.handleEdit       = this.handleEdit.bind(this);
+    }
+
+    
+    componentWillMount(){
+        this.setState({
+            items : items
+        })
     }
 
     onClickAddTask(item) {
@@ -53,6 +60,7 @@ class App extends Component {
             isShowForm : false
         })
     }
+
 
     handleEdit(item) {
         this.setState({
@@ -86,7 +94,8 @@ class App extends Component {
 
     handleToggleForm() {
         this.setState({
-            isShowForm : !this.state.isShowForm
+            isShowForm : !this.state.isShowForm,
+            item            : null
         })
     }
 

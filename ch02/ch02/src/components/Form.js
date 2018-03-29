@@ -9,7 +9,7 @@ class Form extends Component {
             hiddenForm : true,
             id          : "",
             nameTask: '',
-            levelTask: ''
+            levelTask: '0'
         }
         this.clearForm = this.clearForm.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -27,7 +27,7 @@ class Form extends Component {
     componentWillMount() {
         let itemEdit = this.props.onClickEdit;
 
-        if(itemEdit.id !== null) {
+        if(itemEdit !== null) {
             this.setState({
                 id      :itemEdit.id,
                 nameTask : itemEdit.name,
@@ -35,6 +35,18 @@ class Form extends Component {
             })
         }
     }
+
+    componentWillReceiveProps(nextProps) {
+        let itemSelected = nextProps.onClickEdit;
+    
+        if(nextProps.itemSelected !== null) {        
+            this.setState({
+                id : itemSelected.id,
+                nameTask: itemSelected.name,
+                levelTask: itemSelected.level
+            })
+        }
+    };
 
     handleChange(event) {
         const target = event.target;

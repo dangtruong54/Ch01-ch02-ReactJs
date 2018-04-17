@@ -23,7 +23,7 @@ class App extends Component {
             orderBy         : 'name',
             orderDir        : 'desc',
             item            : null 
-        }
+        }     
 
         this.handleToggleForm = this.handleToggleForm.bind(this);
         this.hiddenFormCancel = this.hiddenFormCancel.bind(this);
@@ -36,9 +36,12 @@ class App extends Component {
 
     
     componentWillMount(){
+        let itemsLocalStorage = JSON.parse(localStorage.getItem("items"));
+        let itemsDefault = (itemsLocalStorage !== null) ? itemsLocalStorage : items;
         this.setState({
-            items : items
+            items : itemsDefault
         })
+        localStorage.setItem("items", JSON.stringify(items));
     }
 
     onClickAddTask(item) {
@@ -58,7 +61,8 @@ class App extends Component {
         this.setState({
             items : items,
             isShowForm : false
-        })
+        });
+        localStorage.setItem("items", JSON.stringify(items));
     }
 
 
@@ -66,7 +70,8 @@ class App extends Component {
         this.setState({
             isShowForm : true,
             item       : item
-        })        
+        })
+        localStorage.setItem("items", JSON.stringify(items));        
     }
 
     handleDelete(id){
@@ -77,6 +82,7 @@ class App extends Component {
        this.setState({
            items : items
        })
+       localStorage.setItem("items", JSON.stringify(items));
     }
 
     handleSort(orderBy, orderDir){
@@ -84,12 +90,14 @@ class App extends Component {
             orderBy : orderBy,
             orderDir : orderDir
         });        
+        localStorage.setItem("items", JSON.stringify(items));
     }
 
     handleSearch(value){
         this.setState({
             strSearch : value
         })
+        localStorage.setItem("items", JSON.stringify(items));
     }
 
     handleToggleForm() {

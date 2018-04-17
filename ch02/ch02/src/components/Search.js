@@ -23,7 +23,6 @@ class Search extends Component {
     }
 
     handleClear() {
-
         this.setState({strSearch : ''});
         this.props.onClickGo('');      
     }  
@@ -32,7 +31,7 @@ class Search extends Component {
         return ( 
             <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                 <div className="input-group">
-                    <input type="text" className="form-control" laceholder="Search for..." value={this.state.value} onChange={this.handleChange}/>
+                    <input type="text" className="form-control" laceholder="Search for..." value={this.state.strSearch} onChange={this.handleChange}/>
                     <span className="input-group-btn">
                         <button className="btn btn-info" type="button" onClick={this.handleSearch}>Go!</button>
                         <button className="btn btn-warning" type="button" onClick={this.handleClear}>Clear</button>

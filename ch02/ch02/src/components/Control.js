@@ -10,7 +10,7 @@ class Control extends Component {
     }
 
     handleAddTask() {
-        this.props.onClickAdd();        
+        this.props.onClickAdd();
     }
 
     render() {       
